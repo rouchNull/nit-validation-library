@@ -1,0 +1,6 @@
+co\com\dian\nit\core\validation\DianNitValidator.class
+co\com\dian\nit\core\domain\NitType.class
+co\com\dian\nit\core\domain\Nit.class
+co\com\dian\nit\core\validation\MultiplierSequence.class
+co\com\dian\nit\core\validation\DigitCalculator.class
+co\com\dian\nit\core\domain\NitValidationResult.class
