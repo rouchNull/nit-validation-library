@@ -1,5 +1,8 @@
 package co.com.dian.nit.core.service;
 
+import co.com.dian.nit.core.error.NitErrorCode;
+import co.com.dian.nit.core.error.NitValidationException;
+
 /**
  * Limpieza inteligente de entradas NIT.
  * Soporta formatos: 900.123.456-7, 9001234567, 900 123 456 7
@@ -14,14 +17,20 @@ public final class NitSanitizer {
      */
     public static String sanitize(String input) {
 
-        if (input == null) {
-            throw new IllegalArgumentException("NIT no puede ser null");
+        if (input == null || input.trim().isEmpty()) {
+            throw new NitValidationException(NitErrorCode.EMPTY_NIT);
         }
 
-        String sanitized = input.trim().replaceAll("[^0-9]", "");
+        String sanitized = input
+                .trim()
+                .replaceAll("[^0-9]", "");
 
         if (sanitized.isEmpty()) {
-            throw new IllegalArgumentException("NIT vacío luego de sanitizar");
+            throw new NitValidationException(NitErrorCode.NON_NUMERIC);
+        }
+
+        if (sanitized.length() < 7 || sanitized.length() > 15) {
+            throw new NitValidationException(NitErrorCode.INVALID_LENGTH);
         }
 
         return sanitized;
@@ -32,8 +41,8 @@ public final class NitSanitizer {
      */
     public static String extractBase(String sanitized) {
 
-        if (sanitized.length() < 2) {
-            throw new IllegalArgumentException("NIT demasiado corto");
+        if (sanitized == null || sanitized.length() < 2) {
+            throw new NitValidationException(NitErrorCode.INVALID_LENGTH);
         }
 
         return sanitized.substring(0, sanitized.length() - 1);
@@ -43,6 +52,10 @@ public final class NitSanitizer {
      * Extrae dígito verificador.
      */
     public static char extractDigit(String sanitized) {
+
+        if (sanitized == null || sanitized.length() < 2) {
+            throw new NitValidationException(NitErrorCode.INVALID_LENGTH);
+        }
 
         return sanitized.charAt(sanitized.length() - 1);
     }
