@@ -1,5 +1,6 @@
 package co.com.dian.nit.core.validation;
 
+import co.com.dian.nit.core.contract.NitValidator;
 import co.com.dian.nit.core.domain.Nit;
 import co.com.dian.nit.core.domain.NitType;
 import co.com.dian.nit.core.domain.NitValidationResult;
@@ -7,7 +8,7 @@ import co.com.dian.nit.core.domain.NitValidationResult;
 /**
  * Implementación oficial DIAN para validación de NIT.
  */
-public final class DianNitValidator {
+public final class DianNitValidator implements NitValidator {
 
     /**
      * Valida un NIT completo (base + dígito).
@@ -38,6 +39,7 @@ public final class DianNitValidator {
     /**
      * Valida string completo: 900123456-7 ó 9001234567
      */
+    @Override
     public NitValidationResult validate(String fullNit) {
 
         String sanitized = fullNit.replaceAll("[^0-9]", "");
@@ -50,6 +52,26 @@ public final class DianNitValidator {
         char digit = sanitized.charAt(sanitized.length() - 1);
 
         return validate(base, digit);
+    }
+
+    /**
+     * Validación rápida booleana (sin exceptions).
+     */
+    @Override
+    public boolean isValid(String nit) {
+        try {
+            return validate(nit).isValid();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Calcula dígito verificador desde base.
+     */
+    @Override
+    public char calculateDigit(String baseNumber) {
+        return DigitCalculator.calculate(baseNumber);
     }
 
     /**
