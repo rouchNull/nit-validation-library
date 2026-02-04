@@ -1,5 +1,6 @@
 co\com\dian\nit\core\validation\DianNitValidator.class
 co\com\dian\nit\core\domain\Nit.class
+co\com\dian\nit\core\factory\NitFactory.class
 co\com\dian\nit\core\validation\MultiplierSequence.class
 co\com\dian\nit\core\service\NitSanitizer.class
 co\com\dian\nit\core\service\NitService.class
