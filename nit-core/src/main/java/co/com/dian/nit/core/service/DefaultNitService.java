@@ -1,54 +1,43 @@
 package co.com.dian.nit.core.service;
 
+import co.com.dian.nit.core.contract.NitService;
+import co.com.dian.nit.core.contract.NitValidator;
 import co.com.dian.nit.core.domain.Nit;
 import co.com.dian.nit.core.domain.NitValidationResult;
-import co.com.dian.nit.core.validation.DianNitValidator;
+import co.com.dian.nit.core.error.NitValidationException;
+import co.com.dian.nit.core.factory.NitFactory;
 
 /**
- * Implementación oficial del servicio NIT.
+ * Implementación por defecto del servicio NIT.
+ * No conoce implementaciones concretas del algoritmo.
  */
 public final class DefaultNitService implements NitService {
 
-    private final DianNitValidator validator;
+    private final NitValidator validator;
 
-    public DefaultNitService() {
-        this.validator = new DianNitValidator();
-    }
-
-    public DefaultNitService(DianNitValidator validator) {
+    public DefaultNitService(NitValidator validator) {
         this.validator = validator;
     }
 
     @Override
     public NitValidationResult validate(String nit) {
-
-        String sanitized = NitSanitizer.sanitize(nit);
-
-        String base = NitSanitizer.extractBase(sanitized);
-        char digit = NitSanitizer.extractDigit(sanitized);
-
-        return validator.validate(base, digit);
+        return validator.validate(nit);
     }
 
     @Override
-    public NitValidationResult validate(String baseNumber, char digit) {
-        return validator.validate(baseNumber, digit);
+    public boolean isValid(String nit) {
+        return validator.isValid(nit);
     }
 
     @Override
     public Nit parse(String nit) {
 
-        String sanitized = NitSanitizer.sanitize(nit);
+        NitValidationResult result = validate(nit);
 
-        String base = NitSanitizer.extractBase(sanitized);
-        char digit = NitSanitizer.extractDigit(sanitized);
+        if (!result.isValid()) {
+            throw new NitValidationException(result);
+        }
 
-        return validator.createIfValid(base, digit);
+        return NitFactory.create(nit);
     }
-
-    @Override
-    public boolean isValid(String nit) {
-        return validate(nit).isValid();
-    }
-
 }

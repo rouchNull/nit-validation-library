@@ -1,38 +1,30 @@
 package co.com.dian.nit.core.factory;
 
 import co.com.dian.nit.core.domain.Nit;
-import co.com.dian.nit.core.service.DefaultNitService;
-import co.com.dian.nit.core.service.NitService;
+import co.com.dian.nit.core.domain.NitType;
+import co.com.dian.nit.core.service.NitSanitizer;
 
 /**
  * Factory oficial para crear objetos Nit.
+ * NO valida. NO conoce servicios.
  */
 public final class NitFactory {
-
-    private static final NitService service = new DefaultNitService();
 
     private NitFactory() {
     }
 
     /**
-     * Construye Nit validado desde string completo.
+     * Crea un Nit confiable desde un string ya validado.
      */
-    public static Nit from(String nit) {
-        return service.parse(nit);
-    }
+    public static Nit create(String nit) {
 
-    /**
-     * Construye Nit validado desde partes.
-     */
-    public static Nit from(String base, char digit) {
-        return service.parse(base + digit);
-    }
+        String sanitized = NitSanitizer.sanitize(nit);
 
-    /**
-     * Validación rápida.
-     */
-    public static boolean isValid(String nit) {
-        return service.isValid(nit);
-    }
+        String base = NitSanitizer.extractBase(sanitized);
+        char digit = NitSanitizer.extractDigit(sanitized);
 
+        NitType type = NitType.detect(base);
+
+        return Nit.ofTrusted(base, digit, type);
+    }
 }

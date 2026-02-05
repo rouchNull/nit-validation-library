@@ -6,10 +6,12 @@ co\com\dian\nit\core\service\DefaultNitService.class
 co\com\dian\nit\core\error\NitValidationException.class
 co\com\dian\nit\core\contract\NitService.class
 co\com\dian\nit\core\validation\DigitCalculator.class
+co\com\dian\nit\core\factory\NitServiceFactory.class
 co\com\dian\nit\core\error\NitErrorCode.class
 co\com\dian\nit\core\validation\DianNitValidator.class
 co\com\dian\nit\core\domain\Nit.class
 co\com\dian\nit\core\validation\MultiplierSequence.class
+co\com\dian\nit\core\factory\NitValidatorFactory.class
 co\com\dian\nit\core\service\NitService.class
 co\com\dian\nit\core\contract\NitValidator.class
 co\com\dian\nit\core\domain\NitType.class
