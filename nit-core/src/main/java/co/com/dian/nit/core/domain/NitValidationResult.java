@@ -16,23 +16,38 @@ public final class NitValidationResult implements Serializable {
     private final char providedDigit;
     private final NitType type;
     private final String formatted;
+    private final String errorMessage;
 
     private NitValidationResult(boolean valid,
             String baseNumber,
             char expectedDigit,
             char providedDigit,
-            NitType type) {
+            NitType type,
+            String errorMessage) {
+
+        if (baseNumber == null) {
+            throw new NullPointerException("baseNumber cannot be null");
+        }
 
         this.valid = valid;
         this.baseNumber = baseNumber;
         this.expectedDigit = expectedDigit;
         this.providedDigit = providedDigit;
-        this.type = type;
+        this.type = type == null ? NitType.DESCONOCIDO : type;
+        this.errorMessage = errorMessage;
         this.formatted = baseNumber + "-" + providedDigit;
     }
 
     /* ========= FACTORY METHODS ========= */
 
+    /**
+     * Crea un resultado de validación exitoso.
+     * 
+     * @param baseNumber número base
+     * @param digit dígito verificado
+     * @param type tipo detectado
+     * @return resultado válido
+     */
     public static NitValidationResult valid(String baseNumber,
             char digit,
             NitType type) {
@@ -42,9 +57,19 @@ public final class NitValidationResult implements Serializable {
                 baseNumber,
                 digit,
                 digit,
-                type);
+                type,
+                null);
     }
 
+    /**
+     * Crea un resultado de validación fallido.
+     * 
+     * @param baseNumber número base
+     * @param expectedDigit dígito esperado
+     * @param providedDigit dígito recibido
+     * @param type tipo detectado
+     * @return resultado inválido
+     */
     public static NitValidationResult invalid(String baseNumber,
             char expectedDigit,
             char providedDigit,
@@ -55,10 +80,37 @@ public final class NitValidationResult implements Serializable {
                 baseNumber,
                 expectedDigit,
                 providedDigit,
-                type);
+                type,
+                String.format("NIT inválido. Base: %s, esperado: %s, recibido: %s", baseNumber, expectedDigit, providedDigit));
+    }
+
+    /**
+     * Crea un resultado de validación fallido con mensaje personalizado.
+     * 
+     * @param baseNumber número base
+     * @param expectedDigit dígito esperado
+     * @param providedDigit dígito recibido
+     * @param type tipo detectado
+     * @param errorMessage mensaje de error
+     * @return resultado inválido
+     */
+    public static NitValidationResult invalid(String baseNumber,
+            char expectedDigit,
+            char providedDigit,
+            NitType type,
+            String errorMessage) {
+
+        return new NitValidationResult(
+                false,
+                baseNumber,
+                expectedDigit,
+                providedDigit,
+                type,
+                errorMessage);
     }
 
     /* ========= GETTERS ========= */
+
 
     public boolean isValid() {
         return valid;
@@ -84,14 +136,21 @@ public final class NitValidationResult implements Serializable {
         return formatted;
     }
 
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
     /* ========= UTILS ========= */
+
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (!(o instanceof NitValidationResult))
+        }
+        if (!(o instanceof NitValidationResult)) {
             return false;
+        }
         NitValidationResult that = (NitValidationResult) o;
         return valid == that.valid &&
                 expectedDigit == that.expectedDigit &&

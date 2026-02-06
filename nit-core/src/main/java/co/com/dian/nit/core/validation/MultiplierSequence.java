@@ -14,11 +14,24 @@ public final class MultiplierSequence {
     private MultiplierSequence() {
     }
 
+    /**
+     * Retorna una copia de la secuencia de multiplicadores.
+     * 
+     * @return array de multiplicadores
+     */
     public static int[] get() {
-        return SEQUENCE;
+        return SEQUENCE.clone();
     }
 
+
+    /**
+     * Obtiene el multiplicador para una posición específica desde la derecha.
+     * 
+     * @param indexFromRight posición (0 = más a la derecha)
+     * @return valor del multiplicador
+     */
     public static int getForPosition(int indexFromRight) {
+
 
         if (indexFromRight < 0 || indexFromRight >= SEQUENCE.length) {
             throw new IllegalArgumentException("Index fuera de rango: " + indexFromRight);

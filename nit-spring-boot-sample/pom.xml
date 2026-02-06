@@ -10,4 +10,25 @@
 
     <artifactId>nit-spring-boot-sample</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>co.com.dian.nit</groupId>
+            <artifactId>nit-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

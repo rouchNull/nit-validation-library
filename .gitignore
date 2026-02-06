@@ -1,0 +1,25 @@
+# Maven
+target/
+*.log
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+.classpath
+.project
+.settings/
+.factorypath
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+hs_err_pid*.log
+replay_pid*.log
+
+# Temporary execution files
+curl
+-H
+-d

@@ -1,8 +1,8 @@
-C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java\co\com\dian\nit\core\service\NitService.java
 C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java\co\com\dian\nit\core\validation\DigitCalculator.java
 C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java\co\com\dian\nit\core\validation\DianNitValidator.java
 C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java\co\com\dian\nit\core\contract\NitService.java
 C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java\co\com\dian\nit\core\service\NitSanitizer.java
+C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java\co\com\dian\nit\core\metrics\NitMetrics.java
 C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java\co\com\dian\nit\core\validation\MultiplierSequence.java
 C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java\co\com\dian\nit\core\domain\Nit.java
 C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java\co\com\dian\nit\core\factory\NitValidatorFactory.java
@@ -16,3 +16,4 @@ C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java
 C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java\co\com\dian\nit\core\error\NitValidationException.java
 C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java\co\com\dian\nit\core\contract\NitValidator.java
 C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java\co\com\dian\nit\core\domain\NitValidationResult.java
+C:\Users\Lljos\OneDrive\Escritorio\nit-validation-library\nit-core\src\main\java\co\com\dian\nit\core\cache\NitCache.java

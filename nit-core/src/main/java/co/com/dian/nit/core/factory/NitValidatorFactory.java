@@ -6,11 +6,25 @@ import co.com.dian.nit.core.validation.DianNitValidator;
 /**
  * Factory de validadores NIT.
  */
-public final class NitValidatorFactory {
+public class NitValidatorFactory {
+
 
     private static final NitValidator DIAN_VALIDATOR = new DianNitValidator();
+    private final NitValidator validator;
 
-    private NitValidatorFactory() {
+    public NitValidatorFactory() {
+        this.validator = DIAN_VALIDATOR;
+    }
+
+    public NitValidatorFactory(NitValidator validator) {
+        this.validator = validator;
+    }
+
+    /**
+     * Retorna la instancia configurada en este factory.
+     */
+    public NitValidator getValidator() {
+        return validator;
     }
 
     /**

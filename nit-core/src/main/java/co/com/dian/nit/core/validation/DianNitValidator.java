@@ -8,7 +8,7 @@ import co.com.dian.nit.core.domain.NitValidationResult;
 /**
  * Implementación oficial DIAN para validación de NIT.
  */
-public final class DianNitValidator implements NitValidator {
+public class DianNitValidator implements NitValidator {
 
     /**
      * Valida un NIT completo (base + dígito).
@@ -21,7 +21,7 @@ public final class DianNitValidator implements NitValidator {
         char expectedDigit = DigitCalculator.calculate(baseNumber);
         NitType type = NitType.detect(baseNumber);
 
-        if (expectedDigit == providedDigit) {
+        if (expectedDigit == providedDigit && !type.isUnknown()) {
 
             return NitValidationResult.valid(
                     baseNumber,
@@ -29,29 +29,67 @@ public final class DianNitValidator implements NitValidator {
                     type);
         }
 
+        String errorMsg = type.isUnknown() ? "Unknown NIT type or out of range" : 
+                String.format("Invalid verification digit. Expected: %s, Received: %s", expectedDigit, providedDigit);
+
         return NitValidationResult.invalid(
                 baseNumber,
                 expectedDigit,
                 providedDigit,
-                type);
+                type,
+                errorMsg);
     }
 
     /**
-     * Valida string completo: 900123456-7 ó 9001234567
+     * Valida string completo: 900123456-7 ó 9001234567.
+     * Versión optimizada para evitar asignaciones innecesarias de memoria.
      */
     @Override
     public NitValidationResult validate(String fullNit) {
 
-        String sanitized = fullNit.replaceAll("[^0-9]", "");
-
-        if (sanitized.length() < 2) {
-            throw new IllegalArgumentException("NIT inválido: " + fullNit);
+        if (fullNit == null || fullNit.isEmpty()) {
+            return NitValidationResult.invalid(
+                    "0", '0', '0', NitType.DESCONOCIDO, "NIT is null or empty");
         }
 
-        String base = sanitized.substring(0, sanitized.length() - 1);
-        char digit = sanitized.charAt(sanitized.length() - 1);
+        // Sanitización rápida manual en array local
+        int len = fullNit.length();
+        char[] digits = new char[len];
+        int count = 0;
+        for (int i = 0; i < len; i++) {
+            char c = fullNit.charAt(i);
+            if (c >= '0' && c <= '9') {
+                digits[count++] = c;
+            }
+        }
 
-        return validate(base, digit);
+        if (count < 2) {
+            return NitValidationResult.invalid(
+                    new String(digits, 0, count), '0', '0', NitType.DESCONOCIDO, 
+                    "Insufficient length for NIT: " + fullNit);
+        }
+
+        // Usar versiones optimizadas que trabajan con arrays
+        char providedDigit = digits[count - 1];
+        int baseLen = count - 1;
+        char expectedDigit = DigitCalculator.calculate(digits, 0, baseLen);
+        NitType type = NitType.detect(digits, 0, baseLen);
+
+        String baseStr = new String(digits, 0, baseLen);
+
+        if (expectedDigit == providedDigit && !type.isUnknown()) {
+            return NitValidationResult.valid(baseStr, providedDigit, type);
+        }
+
+        String errorMsg = type.isUnknown() ? "Unknown NIT type or out of range" : 
+                String.format("Invalid verification digit. Expected: %s, Received: %s", expectedDigit, providedDigit);
+
+        return NitValidationResult.invalid(
+                baseStr,
+                expectedDigit,
+                providedDigit,
+                type,
+                errorMsg);
     }
 
     /**
@@ -59,11 +97,33 @@ public final class DianNitValidator implements NitValidator {
      */
     @Override
     public boolean isValid(String nit) {
-        try {
-            return validate(nit).isValid();
-        } catch (Exception e) {
+        if (nit == null || nit.isEmpty()) {
             return false;
         }
+        
+        // Optimizamos isValid para ser lo más rápido posible (zero-allocation para el path feliz)
+        int len = nit.length();
+        char[] digits = new char[len];
+        int count = 0;
+        for (int i = 0; i < len; i++) {
+            char c = nit.charAt(i);
+            if (c >= '0' && c <= '9') {
+                digits[count++] = c;
+            }
+        }
+
+        if (count < 2) {
+            return false;
+        }
+
+        char providedDigit = digits[count - 1];
+        int baseLen = count - 1;
+        
+        if (DigitCalculator.calculate(digits, 0, baseLen) != providedDigit) {
+            return false;
+        }
+
+        return !NitType.detect(digits, 0, baseLen).isUnknown();
     }
 
     /**
@@ -83,7 +143,7 @@ public final class DianNitValidator implements NitValidator {
 
         if (!result.isValid()) {
             throw new IllegalArgumentException(
-                    "Dígito inválido. Esperado: " + result.getExpectedDigit());
+                    "Invalid digit. Expected: " + result.getExpectedDigit());
         }
 
         return Nit.ofTrusted(baseNumber, digit, result.getType());
