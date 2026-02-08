@@ -51,6 +51,7 @@
 
     <!-- Módulos -->
     <modules>
+
         <module>nit-core</module>
         <module>nit-spring-boot-starter</module>
         <module>nit-spring-boot-sample</module>
@@ -328,16 +329,18 @@
                 </plugin>
 
                 <!-- Nexus Staging -->
-                <plugin>
-                    <groupId>org.sonatype.plugins</groupId>
-                    <artifactId>nexus-staging-plugin</artifactId>
-                    <version>1.6.13</version>
-                    <configuration>
-                        <serverId>sonatype-nexus-staging</serverId>
-                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                    </configuration>
-                </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-plugin</artifactId>
+                <version>1.6.13</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
 
                 <!-- Checkstyle -->
                 <plugin>
