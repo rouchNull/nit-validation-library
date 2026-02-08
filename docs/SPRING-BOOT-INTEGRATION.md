@@ -21,7 +21,7 @@ Add the Spring Boot starter to your `pom.xml`:
 
 ```xml
 <dependency>
-    <groupId>co.com.dian.nit</groupId>
+    <groupId>io.github.rouchnull.nit</groupId>
     <artifactId>nit-spring-boot-starter</artifactId>
     <version>1.0.0</version>
 </dependency>
@@ -34,7 +34,7 @@ The starter is auto-configured by Spring Boot. No additional configuration is re
 ### 3. Use the @Nit Annotation
 
 ```java
-import co.com.dian.nit.core.validation.annotation.Nit;
+import io.github.rouchnull.nit.core.validation.annotation.Nit;
 import jakarta.validation.Valid;
 
 @RestController
@@ -102,7 +102,7 @@ public class NitConfig {
 The primary annotation for NIT validation:
 
 ```java
-import co.com.dian.nit.core.validation.annotation.Nit;
+import io.github.rouchnull.nit.core.validation.annotation.Nit;
 
 public class Person {
     
@@ -412,7 +412,7 @@ Enable debug logging for troubleshooting:
 ```yaml
 logging:
   level:
-    co.com.dian.nit: DEBUG
+    io.github.rouchnull.nit: DEBUG
 ```
 
 This guide provides a comprehensive overview of integrating NIT Validation Library with Spring Boot applications. For more detailed information, refer to the API documentation and examples.

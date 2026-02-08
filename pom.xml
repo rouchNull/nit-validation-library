@@ -7,14 +7,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Coordenadas padre -->
-    <groupId>co.com.dian.nit</groupId>
+    <groupId>io.github.rouchnull.nit</groupId>
     <artifactId>nit-validation-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>NIT Validation Library</name>
     <description>Enterprise-grade NIT validation library for Colombia (DIAN)</description>
-    <url>https://github.com/dian-nit/nit-validation-library</url>
+    <url>https://github.com/rouchNull/nit-validation-library</url>
 
     <licenses>
         <license>
@@ -25,17 +25,17 @@
 
     <developers>
         <developer>
-            <name>NIT Library Team</name>
-            <email>team@nit-library.com</email>
-            <organization>DIAN Community</organization>
-            <organizationUrl>https://github.com/dian-nit</organizationUrl>
+            <name>Josue M. Sinisterra</name>
+            <email>rouchnull@github.com</email>
+            <organization>Open Source Community</organization>
+            <organizationUrl>https://github.com/rouchNull</organizationUrl>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/dian-nit/nit-validation-library.git</connection>
-        <developerConnection>scm:git:ssh://github.com:dian-nit/nit-validation-library.git</developerConnection>
-        <url>https://github.com/dian-nit/nit-validation-library</url>
+        <connection>scm:git:git://github.com/rouchNull/nit-validation-library.git</connection>
+        <developerConnection>scm:git:ssh://github.com:rouchNull/nit-validation-library.git</developerConnection>
+        <url>https://github.com/rouchNull/nit-validation-library</url>
     </scm>
 
     <distributionManagement>

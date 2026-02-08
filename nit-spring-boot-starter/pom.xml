@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Coordenadas del módulo -->
-    <groupId>co.com.dian.nit</groupId>
+    <groupId>io.github.rouchnull.nit</groupId>
     <artifactId>nit-spring-boot-starter</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -17,7 +17,7 @@
 
     <!-- Módulos padres -->
     <parent>
-        <groupId>co.com.dian.nit</groupId>
+        <groupId>io.github.rouchnull.nit</groupId>
         <artifactId>nit-validation-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
@@ -32,7 +32,7 @@
         
         <!-- Core Module -->
         <dependency>
-            <groupId>co.com.dian.nit</groupId>
+            <groupId>io.github.rouchnull.nit</groupId>
             <artifactId>nit-core</artifactId>
             <version>${project.version}</version>
         </dependency>

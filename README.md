@@ -35,7 +35,7 @@ Añade la dependencia a tu `pom.xml`:
 
 ```xml
 <dependency>
-    <groupId>co.com.dian.nit</groupId>
+    <groupId>io.github.rouchnull.nit</groupId>
     <artifactId>nit-spring-boot-starter</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
